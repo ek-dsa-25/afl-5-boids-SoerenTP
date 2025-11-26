@@ -38,7 +38,7 @@ public class FlockSimulation {
 
     public void setBoidCount(int count) {
         while (boids.size() < count) {
-            addBoid();
+            addBoid(BoidType.STANDARD);
         }
         while (boids.size() > count) {
             boids.remove(boids.size() - 1);
@@ -52,7 +52,7 @@ public class FlockSimulation {
 
     public void update() {
         long startTime = System.nanoTime();
-        
+
         spatialIndex.clear();
         for (Boid boid : boids) {
             spatialIndex.insert(boid);
@@ -62,7 +62,7 @@ public class FlockSimulation {
             List<Boid> neighbors = spatialIndex.findNeighbors(boid, neighborRadius);
             boid.update(neighbors, width, height);
         }
-        
+
         long endTime = System.nanoTime();
         lastIterationTimeMs = (endTime - startTime) / 1_000_000.0;
     }
